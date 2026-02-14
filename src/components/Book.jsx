@@ -1,7 +1,32 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import HTMLFlipBook from "react-pageflip";
 
 function Book() {
+  const bookRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 500, height: 500 });
+
+  // Ajustement des dimensions selon l'écran (même ratio, juste plus petit)
+  useEffect(() => {
+    const updateDimensions = () => {
+      const screenWidth = window.innerWidth;
+      
+      if (screenWidth < 480) {
+        // Petit mobile : 300x300
+        setDimensions({ width: 300, height: 300 });
+      } else if (screenWidth < 768) {
+        // Mobile/Tablette : 350x350
+        setDimensions({ width: 350, height: 350 });
+      } else {
+        // Desktop : 500x500
+        setDimensions({ width: 500, height: 500 });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
   // Couverture avant
   const frontCover = { id: 1, image: "/images/1.png", alt: "Couverture avant" };
   
@@ -27,14 +52,17 @@ function Book() {
 
   return (
     <HTMLFlipBook 
-      width={500}
-      height={500}
+      ref={bookRef}
+      width={dimensions.width}
+      height={dimensions.height}
       maxShadowOpacity={0.5}
       drawShadow={true}
       showCover={true}
       size='fixed'
       className="book-flip"
       mobileScrollSupport={true}
+      swipeDistance={30}
+      flippingTime={600}
     >
       {/* Couverture avant */}
       <div className="page page-cover" data-density="hard">
@@ -74,7 +102,7 @@ function Book() {
       </div>
 
       {/* Couverture arrière (15.png) */}
-      <div className="page page-cover" data-density="hard">
+      <div className="page page-cover page-back" data-density="hard">
         <div className="page-content">
           <img 
             src={backCover.image} 

@@ -60,11 +60,11 @@ body, html {
   background: #ffffff;
 }
 
-/* Images des pages - object-fit: contain pour éviter le crop */
+/* Images des pages - object-fit: cover pour remplir toute la page */
 .page-image {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Pas de crop, l'image reste entière */
+  object-fit: cover;
   display: block;
   user-select: none;
   -webkit-user-drag: none;
@@ -72,45 +72,24 @@ body, html {
   pointer-events: none;
 }
 
-/* Style du livre flip - Scale down sur mobile */
+/* Style du livre flip */
 .book-flip {
   cursor: pointer;
   margin: auto;
-  transform-origin: center center;
 }
 
-/* Desktop: taille normale 500x500 */
-@media (min-width: 769px) {
-  .book-flip {
-    transform: scale(1);
-  }
-}
-
-/* Tablette: réduit à 70% */
-@media (max-width: 768px) and (min-width: 481px) {
-  .book-flip {
-    transform: scale(0.7);
-  }
+/* Responsive pour mobile */
+@media (max-width: 768px) {
   .container {
-    padding-bottom: 140px;
+    padding: 15px;
+    padding-bottom: 110px;
   }
 }
 
-/* Mobile: réduit à 50% */
 @media (max-width: 480px) {
-  .book-flip {
-    transform: scale(0.5);
-  }
   .container {
     padding: 10px;
-    padding-bottom: 150px;
-  }
-}
-
-/* Très petit mobile (iPhone SE): réduit à 40% */
-@media (max-width: 375px) {
-  .book-flip {
-    transform: scale(0.4);
+    padding-bottom: 100px;
   }
 }
 
@@ -176,7 +155,7 @@ img {
 /* Info de la piste */
 .music-info-mini {
   flex: 1;
-  min-width: 0; /* Pour permettre l'ellipsis */
+  min-width: 0;
 }
 
 .music-title-mini {
