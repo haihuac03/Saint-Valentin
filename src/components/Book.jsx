@@ -27,20 +27,17 @@ function Book() {
 
   return (
     <HTMLFlipBook 
-      width={500}        // Format carré - ajustez selon vos préférences
-      height={500}       // Même valeur pour format carré
+      width={500}
+      height={500}
       maxShadowOpacity={0.5}
       drawShadow={true}
-      showCover={true}   // Active le mode couverture (front + back)
+      showCover={true}
       size='fixed'
       className="book-flip"
-      minWidth={300}     // Taille minimum si responsive
-      maxWidth={800}     // Taille maximum si responsive
-      minHeight={300}
-      maxHeight={800}
+      mobileScrollSupport={true}
     >
       {/* Couverture avant */}
-      <div className="page page-cover" key={frontCover.id}>
+      <div className="page page-cover" data-density="hard">
         <div className="page-content">
           <img 
             src={frontCover.image} 
@@ -56,7 +53,7 @@ function Book() {
 
       {/* Pages intérieures */}
       {bookPages.map((page) => (
-        <div className="page" key={page.id}>
+        <div className="page" key={page.id} data-density="soft">
           <div className="page-content">
             <img 
               src={page.image} 
@@ -71,13 +68,13 @@ function Book() {
         </div>
       ))}
 
-      {/* Page blanche (pour nombre pair : permet à la couverture arrière de se fermer correctement) */}
-      <div className="page page-blank" key="page-blank">
+      {/* Page blanche avant la couverture arrière */}
+      <div className="page page-blank" data-density="soft">
         <div className="page-content" />
       </div>
 
       {/* Couverture arrière (15.png) */}
-      <div className="page page-cover" key={backCover.id}>
+      <div className="page page-cover" data-density="hard">
         <div className="page-content">
           <img 
             src={backCover.image} 

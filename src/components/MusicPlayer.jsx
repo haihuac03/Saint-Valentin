@@ -24,45 +24,40 @@ export const PLAYLIST = [
   },
 ];
 
-function MusicPlayer({ isOpen, onClose, isPlaying, onTogglePlay, onNext, currentTrack }) {
-  if (!isOpen) return null;
-
+function MusicPlayer({ isPlaying, onTogglePlay, onNext, currentTrack }) {
   return (
-    <>
-      <div className="music-modal-overlay" onClick={onClose} aria-hidden="true" />
-      <div className="music-modal" role="dialog" aria-label="Lecteur musical">
-        <button type="button" className="music-modal-close" onClick={onClose} aria-label="Fermer">
-          ×
-        </button>
-        <div className="music-disc-container">
-          <div className={`music-disc ${isPlaying ? 'music-disc--playing' : ''}`}>
-            <div className="music-disc-inner" />
-          </div>
-        </div>
-        <div className="music-info">
-          <p className="music-title">{currentTrack?.title}</p>
-          <p className="music-artist">{currentTrack?.artist}</p>
-        </div>
-        <div className="music-controls">
-          <button
-            type="button"
-            className="music-btn music-btn--play"
-            onClick={onTogglePlay}
-            aria-label={isPlaying ? 'Pause' : 'Lecture'}
-          >
-            {isPlaying ? '⏸' : '▶'}
-          </button>
-          <button
-            type="button"
-            className="music-btn music-btn--next"
-            onClick={onNext}
-            aria-label="Piste suivante"
-          >
-            ⏭
-          </button>
-        </div>
+    <div className="music-player-fixed">
+      {/* Disque vinyle mini */}
+      <div className={`music-disc-mini ${isPlaying ? 'music-disc-mini--playing' : ''}`}>
+        <div className="music-disc-mini-inner" />
       </div>
-    </>
+
+      {/* Info piste */}
+      <div className="music-info-mini">
+        <p className="music-title-mini">{currentTrack?.title || "Aucune piste"}</p>
+        <p className="music-artist-mini">{currentTrack?.artist || ""}</p>
+      </div>
+
+      {/* Contrôles */}
+      <div className="music-controls-mini">
+        <button
+          type="button"
+          className="music-btn-mini music-btn-mini--play"
+          onClick={onTogglePlay}
+          aria-label={isPlaying ? 'Pause' : 'Lecture'}
+        >
+          {isPlaying ? '⏸' : '▶'}
+        </button>
+        <button
+          type="button"
+          className="music-btn-mini"
+          onClick={onNext}
+          aria-label="Piste suivante"
+        >
+          ⏭
+        </button>
+      </div>
+    </div>
   );
 }
 
